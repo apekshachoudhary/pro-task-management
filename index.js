@@ -35,8 +35,15 @@ const addNewCard = () => {
 </div>`;
 
     // Inject it to DOM
-    taskContainer.insertAdjacentHTML()
+    taskContainer.insertAdjacentHTML("beforeend", newCard);
 
     //clear the form
+    document.getElementById("taskTitle").value = "";
+    document.getElementById("imageURL").value = "";
+    document.getElementById("taskType").value = "";
+    document.getElementById("taskDescription").value = "";
+
+    return;
+
 };
 
