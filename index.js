@@ -7,8 +7,8 @@ const generateHTML = (taskData) => `<div id=${taskData.id} class="col-lg-4 col-m
         <button class="btn btn-outline-info">
             <i class="fal fa-pencil"></i>
         </button>
-        <button class="btn btn-outline-danger" name=${taskData.id} onclick="deleteCard()">
-            <i class="far fa-trash-alt" name=${taskData.id} onclick="deleteCard()"></i>
+        <button class="btn btn-outline-danger" name=${taskData.id} onclick="deleteCard.apply(this, arguments)">
+            <i class="far fa-trash-alt" name=${taskData.id}></i>
         </button>
     </div>
     <div class="card-body">
