@@ -1,4 +1,5 @@
 const taskContainer = document.querySelector(".task__container");
+let globalTaskData = [];
 
 const addNewCard = () => {
     // get task Data
@@ -10,6 +11,11 @@ const addNewCard = () => {
         type: document.getElementById("taskType").value,
         description: document.getElementById("taskDescription").value
     };
+
+    globalTaskData.push(taskData);
+
+    // update the localstorage
+    localStorage.setItem("taskyCA", taskData);
 
     // generate HTML code
     const newCard = `<div id=${taskData.id} class="col-lg-4 col-md-6 my-4">
@@ -45,5 +51,16 @@ const addNewCard = () => {
 
     return;
 
+};
+
+const loadExistingCards = () => {
+
+    // check localstorage
+
+    // retrive data, if exist
+
+    // generate HTML code for those data
+
+    // inject to the DOM
 };
 
