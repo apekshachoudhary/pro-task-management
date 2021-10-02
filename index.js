@@ -18,7 +18,7 @@ const generateHTML = (taskData) => `<div id=${taskData.id} class="col-lg-4 col-m
         <span class="badge bg-primary">${taskData.type}</span>
     </div>
     <div class="card-footer">
-        <button class="btn btn-outline-primary">Open Task</button>
+        <button class="btn btn-outline-primary" name=${taskData.id} >Open Task</button>
     </div>
 </div>
 </div>`;
@@ -113,7 +113,7 @@ const editCared = (event) => {
 
     if (elementType === "BUTTON") {
         parentElement = event.target.parentNode.parentNode
-    }else{
+    } else {
         parentElement = event.target.parentNode.parentNode.parentNode
     }
 
@@ -125,33 +125,50 @@ const editCared = (event) => {
     taskTitle.setAttribute("contenteditable", "true");
     taskDescription.setAttribute("contenteditable", "true");
     taskType.setAttribute("contenteditable", "true");
+    submitButton.setAttribute("onclick", "saveEdit.apply(this, arguments)");
     submitButton.innerHTML = "Save Changes";
 };
 
 const saveEdit = (event) => {
     const targetId = event.target.getAttribute("name");
     const elementType = event.target.tagName;
-    
+
+    let parentElement;
+
+    if (elementType === "BUTTON") {
+        parentElement = event.target.parentNode.parentNode
+    } else {
+        parentElement = event.target.parentNode.parentNode.parentNode
+    }
+
     const taskTitle = parentElement.childNodes[3].childNodes[3];
     const taskDescription = parentElement.childNodes[3].childNodes[5];
     const taskType = parentElement.childNodes[3].childNodes[7];
     const submitButton = parentElement.childNodes[5].childNodes[1];
 
-    const updateData = {
-        title: taskTitle,
-        type: taskType,
-        description: taskDescription
+    const updatedData = {
+        title: taskTitle.innerHTML,
+        type: taskType.innerHTML,
+        description: taskDescription.innerHTML,
     };
-    
-    globalTaskData.forEach((task) => {
+
+    console.log({updatedData, targetId});
+
+    const updateGlobalTask = globalTaskData.map((task) => {
         if (task.id === targetId) {
-            return {...task, ...updateData};
+            console.log({ ...task, ...updatedData });
+            return { ...task, ...updatedData };
         }
         return task;
     });
 
+    globalTaskData = updateGlobalTask;
+
     saveToLocalStorage();
 
-    
+    taskTitle.setAttribute("contenteditable", "false");
+    taskDescription.setAttribute("contenteditable", "false");
+    taskType.setAttribute("contenteditable", "false");
+    submitButton.innerHTML = "Open Task";
 };
 
